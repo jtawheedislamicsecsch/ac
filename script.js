@@ -414,16 +414,6 @@ btn.style.transform="";
 FADE PAGE
 ==============================*/
 
-document.body.style.opacity="0";
-
-window.onload=()=>{
-
-document.body.style.transition="opacity .8s";
-
-document.body.style.opacity="1";
-
-};
-
 /*==============================
 END
 ==============================*/
