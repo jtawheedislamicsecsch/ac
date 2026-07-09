@@ -114,8 +114,10 @@ if (slides.length > 0) {
 
         showSlide(current);
 
-    }, 
-            // ==========================
+    }, 4000);
+
+    }
+// ==========================
 // GALLERY HOVER
 // ==========================
 document.querySelectorAll(".gallery-item").forEach(item => {
@@ -244,7 +246,7 @@ topBtn.onclick = () => {
     });
 
 };
-  // ==========================
+// ==========================
 // WHATSAPP BUTTON
 // ==========================
 const whatsapp = document.createElement("a");
