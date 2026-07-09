@@ -1,419 +1,343 @@
 /*=========================================
 JAMUIYATUL TAWHEED ISLAMIC SECONDARY SCHOOL
-SCRIPT.JS PART 1
-==========================================*/
+SCRIPT.JS - PART 1 (CLEAN VERSION)
+=========================================*/
 
-/*==============================
-LOADING SCREEN
-==============================*/
+// ==========================
+// LOADER
+// ==========================
+window.addEventListener("load", function () {
+    const loader = document.getElementById("loader");
 
-window.addEventListener("load",()=>{
+    if (loader) {
+        setTimeout(function () {
+            loader.style.transition = "opacity .6s ease";
+            loader.style.opacity = "0";
 
-const loader=document.getElementById("loader");
+            setTimeout(function () {
+                loader.style.display = "none";
+            }, 600);
 
-setTimeout(()=>{
-
-loader.style.opacity="0";
-
-loader.style.pointerEvents="none";
-
-setTimeout(()=>{
-
-loader.style.display="none";
-
-},700);
-
-},2500);
-
+        }, 1800);
+    }
 });
 
-/*==============================
-MOBILE MENU
-==============================*/
+// ==========================
+// MOBILE MENU
+// ==========================
+const menu = document.querySelector(".menu");
+const nav = document.querySelector("nav ul");
 
-const menu=document.querySelector(".menu");
+if (menu && nav) {
 
-const nav=document.querySelector("nav ul");
-
-menu.onclick=()=>{
-
-nav.classList.toggle("showMenu");
-
-};
-
-/*==============================
-SMOOTH SCROLL
-==============================*/
-
-document.querySelectorAll('a[href^="#"]')
-
-.forEach(link=>{
-
-link.onclick=function(e){
-
-e.preventDefault();
-
-document
-
-.querySelector(this.getAttribute("href"))
-
-.scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-};
-
-});
-
-/*==============================
-HEADER EFFECT
-==============================*/
-
-const header=document.querySelector("header");
-
-window.addEventListener("scroll",()=>{
-
-if(window.scrollY>80){
-
-header.classList.add("activeHeader");
-
-}else{
-
-header.classList.remove("activeHeader");
+    menu.addEventListener("click", function () {
+        nav.classList.toggle("showMenu");
+    });
 
 }
 
-});
+// ==========================
+// SMOOTH SCROLL
+// ==========================
+document.querySelectorAll('a[href^="#"]').forEach(link => {
 
-/*==============================
-HERO SLIDER
-==============================*/
+    link.addEventListener("click", function (e) {
 
-const slides=document.querySelectorAll(".slide");
+        const target = document.querySelector(this.getAttribute("href"));
 
-let currentSlide=0;
+        if (target) {
 
-function heroSlider(){
+            e.preventDefault();
 
-slides.forEach(slide=>{
+            target.scrollIntoView({
+                behavior: "smooth"
+            });
 
-slide.style.display="none";
+        }
 
-});
-
-currentSlide++;
-
-if(currentSlide>slides.length){
-
-currentSlide=1;
-
-}
-
-slides[currentSlide-1].style.display="block";
-
-}
-
-heroSlider();
-
-setInterval(heroSlider,4000);
-
-/*==============================
-GALLERY HOVER
-==============================*/
-
-document
-
-.querySelectorAll(".gallery-item")
-
-.forEach(item=>{
-
-item.addEventListener("mouseenter",()=>{
-
-item.style.transform="translateY(-10px)";
+    });
 
 });
 
-item.addEventListener("mouseleave",()=>{
+// ==========================
+// HEADER EFFECT
+// ==========================
+const header = document.querySelector("header");
 
-item.style.transform="translateY(0px)";
+window.addEventListener("scroll", function () {
 
-});
+    if (!header) return;
 
-});
+    if (window.scrollY > 80) {
 
-/*==============================
-SCROLL ANIMATION
-==============================*/
+        header.style.background = "rgba(255,255,255,.95)";
+        header.style.backdropFilter = "blur(20px)";
+        header.style.boxShadow = "0 10px 30px rgba(0,0,0,.15)";
 
-const observer=new IntersectionObserver(entries=>{
+    } else {
 
-entries.forEach(entry=>{
+        header.style.background = "rgba(255,255,255,.18)";
+        header.style.boxShadow = "none";
 
-if(entry.isIntersecting){
-
-entry.target.classList.add("show");
-
-}
-
-});
+    }
 
 });
 
-document
+// ==========================
+// HERO SLIDER
+// ==========================
+const slides = document.querySelectorAll(".slide");
 
-.querySelectorAll(
+if (slides.length > 0) {
 
+    let current = 0;
+
+    function showSlide(index) {
+
+        slides.forEach(slide => {
+            slide.style.display = "none";
+        });
+
+        slides[index].style.display = "block";
+
+    }
+
+    showSlide(current);
+
+    setInterval(function () {
+
+        current++;
+
+        if (current >= slides.length) {
+            current = 0;
+        }
+
+        showSlide(current);
+
+    }, 
+            // ==========================
+// GALLERY HOVER
+// ==========================
+document.querySelectorAll(".gallery-item").forEach(item => {
+
+    item.addEventListener("mouseenter", () => {
+        item.style.transform = "translateY(-10px)";
+    });
+
+    item.addEventListener("mouseleave", () => {
+        item.style.transform = "translateY(0)";
+    });
+
+});
+
+// ==========================
+// SCROLL ANIMATION
+// ==========================
+const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+}, {
+    threshold: 0.15
+});
+
+document.querySelectorAll(
 ".card,.activity,.house-card,.gallery-item,.contact-card"
+).forEach(el => {
 
-)
-
-.forEach(el=>{
-
-observer.observe(el);
+    observer.observe(el);
 
 });
 
-/*==============================
-CONTACT FORM
-==============================*/
+// ==========================
+// CONTACT FORM
+// ==========================
+const form = document.querySelector("form");
 
-const form=document.querySelector("form");
+if (form) {
 
-if(form){
+    form.addEventListener("submit", function(e) {
 
-form.addEventListener("submit",e=>{
+        e.preventDefault();
 
-e.preventDefault();
+        alert("Thank you for contacting Jamuiyatul Tawheed Islamic Secondary School.");
 
-alert(
+        form.reset();
 
-"Thank you for contacting Jamuiyatul Tawheed Islamic Secondary School."
-
-);
-
-form.reset();
-
-});
+    });
 
 }
-/*=========================================
-SCRIPT.JS PART 2
-==========================================*/
 
-/*==============================
-DARK MODE
-==============================*/
+// ==========================
+// DARK MODE
+// ==========================
+const themeBtn = document.createElement("button");
 
-const themeBtn=document.createElement("button");
+themeBtn.id = "themeBtn";
 
-themeBtn.id="themeBtn";
-
-themeBtn.innerHTML='<i class="fa-solid fa-moon"></i>';
+themeBtn.innerHTML = "🌙";
 
 document.body.appendChild(themeBtn);
 
-const savedTheme=localStorage.getItem("theme");
+if (localStorage.getItem("theme") === "dark") {
 
-if(savedTheme==="dark"){
+    document.body.classList.add("dark");
 
-document.body.classList.add("dark");
-
-themeBtn.innerHTML='<i class="fa-solid fa-sun"></i>';
+    themeBtn.innerHTML = "☀️";
 
 }
 
-themeBtn.onclick=()=>{
+themeBtn.onclick = function () {
 
-document.body.classList.toggle("dark");
+    document.body.classList.toggle("dark");
 
-if(document.body.classList.contains("dark")){
+    if (document.body.classList.contains("dark")) {
 
-localStorage.setItem("theme","dark");
+        localStorage.setItem("theme", "dark");
 
-themeBtn.innerHTML='<i class="fa-solid fa-sun"></i>';
+        themeBtn.innerHTML = "☀️";
 
-}else{
+    } else {
 
-localStorage.setItem("theme","light");
+        localStorage.setItem("theme", "light");
 
-themeBtn.innerHTML='<i class="fa-solid fa-moon"></i>';
+        themeBtn.innerHTML = "🌙";
 
-}
+    }
 
 };
 
-/*==============================
-BACK TO TOP
-==============================*/
+// ==========================
+// BACK TO TOP
+// ==========================
+const topBtn = document.createElement("button");
 
-const topBtn=document.createElement("button");
+topBtn.id = "topBtn";
 
-topBtn.id="topBtn";
-
-topBtn.innerHTML='<i class="fa-solid fa-arrow-up"></i>';
+topBtn.innerHTML = "↑";
 
 document.body.appendChild(topBtn);
 
-window.addEventListener("scroll",()=>{
+window.addEventListener("scroll", () => {
 
-topBtn.style.display=
-
-window.scrollY>400
-
-?
-
-"flex"
-
-:
-
-"none";
+    topBtn.style.display =
+    window.scrollY > 400 ? "flex" : "none";
 
 });
 
-topBtn.onclick=()=>{
+topBtn.onclick = () => {
 
-window.scrollTo({
+    window.scrollTo({
 
-top:0,
+        top: 0,
 
-behavior:"smooth"
+        behavior: "smooth"
 
-});
+    });
 
 };
+  // ==========================
+// WHATSAPP BUTTON
+// ==========================
+const whatsapp = document.createElement("a");
 
-/*==============================
-WHATSAPP BUTTON
-==============================*/
-
-const whatsapp=document.createElement("a");
-
-whatsapp.id="whatsapp";
-
-whatsapp.href="https://wa.me/256700000000";
-
-whatsapp.target="_blank";
-
-whatsapp.innerHTML='<i class="fab fa-whatsapp"></i>';
+whatsapp.id = "whatsapp";
+whatsapp.href = "https://wa.me/256701048224";
+whatsapp.target = "_blank";
+whatsapp.innerHTML = "💬";
 
 document.body.appendChild(whatsapp);
 
-/*==============================
-ACTIVE MENU
-==============================*/
+// ==========================
+// ACTIVE NAVIGATION
+// ==========================
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav ul li a");
 
-const sections=document.querySelectorAll("section");
+window.addEventListener("scroll", () => {
 
-const navLinks=document.querySelectorAll("nav ul li a");
+    let current = "";
 
-window.addEventListener("scroll",()=>{
+    sections.forEach(section => {
 
-let current="";
+        if (!section.id) return;
 
-sections.forEach(section=>{
+        const top = section.offsetTop - 150;
 
-const top=section.offsetTop-150;
+        if (window.scrollY >= top) {
+            current = section.id;
+        }
 
-if(pageYOffset>=top){
+    });
 
-current=section.getAttribute("id");
+    navLinks.forEach(link => {
 
-}
+        link.classList.remove("active");
 
-});
+        if (link.getAttribute("href") === "#" + current) {
 
-navLinks.forEach(link=>{
+            link.classList.add("active");
 
-link.classList.remove("active");
+        }
 
-if(link.getAttribute("href")==="#"+current){
-
-link.classList.add("active");
-
-}
-
-});
+    });
 
 });
 
-/*==============================
-COPYRIGHT YEAR
-==============================*/
+// ==========================
+// COPYRIGHT YEAR
+// ==========================
+const year = document.getElementById("year");
 
-const year=document.getElementById("year");
+if (year) {
 
-if(year){
-
-year.textContent=new Date().getFullYear();
-
-}
-
-/*==============================
-PORTRAIT / LANDSCAPE
-==============================*/
-
-function checkOrientation(){
-
-if(window.innerHeight>window.innerWidth){
-
-console.log("Portrait Mode");
-
-}else{
-
-console.log("Landscape Mode");
+    year.textContent = new Date().getFullYear();
 
 }
 
-}
+// ==========================
+// ORIENTATION
+// ==========================
+window.addEventListener("resize", () => {
 
-window.addEventListener("resize",checkOrientation);
-
-checkOrientation();
-
-/*==============================
-WELCOME MESSAGE
-==============================*/
-
-setTimeout(()=>{
-
-console.log(
-
-"Welcome to Jamuiyatul Tawheed Islamic Secondary School"
-
-);
-
-},3500);
-
-/*==============================
-BUTTON ANIMATION
-==============================*/
-
-document
-
-.querySelectorAll("button,.btn,.btn2,.apply-btn")
-
-.forEach(btn=>{
-
-btn.addEventListener("click",()=>{
-
-btn.style.transform="scale(.95)";
-
-setTimeout(()=>{
-
-btn.style.transform="";
-
-},180);
+    console.log(
+        window.innerWidth > window.innerHeight
+        ? "Landscape"
+        : "Portrait"
+    );
 
 });
 
+// ==========================
+// BUTTON CLICK EFFECT
+// ==========================
+document.querySelectorAll(
+"button,.btn,.btn2,.apply-btn"
+).forEach(btn => {
+
+    btn.addEventListener("click", function () {
+
+        this.style.transform = "scale(.96)";
+
+        setTimeout(() => {
+
+            this.style.transform = "";
+
+        }, 180);
+
+    });
+
 });
 
-/*==============================
-FADE PAGE
-==============================*/
-
-/*==============================
-END
-==============================*/
+// ==========================
+// WEBSITE READY
+// ==========================
+console.log("JTISS Website Loaded Successfully ✅");
